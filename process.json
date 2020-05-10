@@ -2,8 +2,9 @@
     "apps": [
         {
             "name": "my-bot",
-            "script": "dist/app.js",
-            "log_date_format": "YYYY-MM-DD HH:mm:ss"
+            "script": "dist/start-manager.js",
+            "node_args": ["--enable-source-maps"],
+            "restart_delay": 10000
         }
     ]
 }
