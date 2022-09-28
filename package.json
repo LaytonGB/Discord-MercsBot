@@ -1,0 +1,22 @@
+{
+  "name": "discord_calendar-watcher",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@gitlab.com:LaytonGB/discord-calendarwatcher.git",
+  "author": "Layton Burchell <laytonb@hotmail.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.5.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "concurrently": "^7.4.0",
+    "eslint": "^8.24.0",
+    "tsc": "^2.0.4",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "start": "tsc && concurrently \"tsc -w\" \"node ./dist/index.js\""
+  }
+}
