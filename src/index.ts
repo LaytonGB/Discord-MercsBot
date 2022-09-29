@@ -1,29 +1,33 @@
-// Require the necessary discord.js classes
-import { Client, GatewayIntentBits } from 'discord.js';
+import fs from "fs";
+import path from "path";
+import { Client, Collection, GatewayIntentBits, REST } from 'discord.js';
 import { token } from './config.json';
 
-// Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds] }) as Client<boolean> & { commands: any };
 
-// When the client is ready, run this code (only once)
-client.once('ready', () => {
-  console.log('Ready!');
-});
+client.commands = new Collection();
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isChatInputCommand()) return;
+for (const file of commandFiles) {
+  const filePath = path.join(commandsPath, file);
+  const command = require(filePath);
+  // Set a new item in the Collection
+  // With the key as the command name and the value as the exported module
+  client.commands.set(command.data.name, command);
+}
 
-  const { commandName } = interaction;
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-  if (commandName === 'ping') {
-    const msg = await interaction.reply({ content: 'Pong!', fetchReply: true });
-    msg.edit("Pong! " + new Date(Date.now() - msg.createdAt.getMilliseconds()).getMilliseconds() + "ms");
-  } else if (commandName === 'server') {
-    await interaction.reply('Server info.');
-  } else if (commandName === 'user') {
-    await interaction.reply('User info.');
+for (const file of eventFiles) {
+  const filePath = path.join(eventsPath, file);
+  const event = require(filePath);
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
   }
-});
+}
 
-// Login to Discord with your client's token
 client.login(token);
