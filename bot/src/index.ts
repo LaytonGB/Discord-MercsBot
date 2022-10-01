@@ -1,13 +1,19 @@
 import fs from "fs";
 import path from "path";
-import { Client, Collection, GatewayIntentBits, REST } from 'discord.js';
-import { token } from './config.json';
+import { Client, Collection, GatewayIntentBits } from "discord.js";
+import { token } from "./config.json";
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] }) as Client<boolean> & { commands: any };
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.DirectMessages,
+  ],
+}) as Client<boolean> & { commands: any };
 
 client.commands = new Collection();
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandsPath = path.join(__dirname, "commands");
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
@@ -17,8 +23,8 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
-const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith(".js"));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);

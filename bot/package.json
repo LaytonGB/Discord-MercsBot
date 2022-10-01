@@ -13,10 +13,11 @@
     "@typescript-eslint/parser": "^5.38.1",
     "concurrently": "^7.4.0",
     "eslint": "^8.24.0",
+    "nodemon": "^2.0.20",
     "tsc": "^2.0.4",
     "typescript": "^4.8.4"
   },
   "scripts": {
-    "start": "tsc && node ./dist/deploy-commands.js && concurrently \"tsc -w\" \"node ./dist/index.js\""
+    "start": "tsc && node ./bot/dist/deploy-commands.js && concurrently \"tsc -w\" \"nodemon ./dist/index.js\""
   }
 }

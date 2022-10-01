@@ -1,7 +1,7 @@
 import { CacheType, Client, Interaction } from "discord.js";
 
 module.exports = {
-  name: 'interactionCreate',
+  name: "interactionCreate",
   async execute(interaction: Interaction<CacheType>) {
     if (!interaction.isChatInputCommand()) return;
 
@@ -13,7 +13,7 @@ module.exports = {
       await command.execute(interaction);
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+      await interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
     }
   },
 };

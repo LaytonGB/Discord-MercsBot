@@ -1,11 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import { REST, Routes } from 'discord.js';
-import { clientId, token } from './config.json';
+import fs from "fs";
+import path from "path";
+import { REST, Routes } from "discord.js";
+import { clientId, token } from "./config.json";
 
 const commands: JSON[] = [];
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandsPath = path.join(__dirname, "commands");
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
@@ -15,7 +15,7 @@ for (const file of commandFiles) {
   }
 }
 
-const rest = new REST({ version: '10' }).setToken(token);
+const rest = new REST({ version: "10" }).setToken(token);
 
 rest.put(Routes.applicationCommands(clientId), { body: commands })
   .then(data => console.log(`Successfully registered ${(data as any).length} application commands.`))
