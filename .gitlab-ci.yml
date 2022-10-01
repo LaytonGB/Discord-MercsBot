@@ -1,0 +1,31 @@
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+stages:
+    - build
+    - deploy
+
+build:
+    stage: build
+    script:
+        - cd page
+        - yarn install
+        - yarn build
+    cache:
+        paths:
+            - page/node_modules/
+            - page/yarn.lock
+
+pages:
+    stage: deploy
+    script:
+        - cd page
+        - yarn build
+    cache:
+        paths:
+            - page/node_modules/
+            - page/yarn.lock
+    artifacts:
+        paths:
+            - page/public/
