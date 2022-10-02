@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { makeGoogleCalendarLink, makeIcsFile } from "../scripts/utils";
+  import { makeGoogleCalendarLink, makeIcsFile } from "./utils";
 
   let fileURL;
   let googleURL;

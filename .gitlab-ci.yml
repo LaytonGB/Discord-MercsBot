@@ -3,29 +3,36 @@
 image: node:latest
 
 stages:
-    - build
-    - deploy
+  - build/lint
+  - deploy
 
-build:
-    stage: build
-    script:
-        - cd page
-        - yarn install
-        - yarn build
-    cache:
-        paths:
-            - page/node_modules/
-            - page/yarn.lock
+build-page:
+  stage: build/lint
+  script:
+    - cd page
+    - yarn install
+    - yarn build
+  cache:
+    paths:
+      - page/node_modules/
+      - page/yarn.lock
+
+lint-bot:
+  stage: build/lint
+  script:
+    - cd bot
+    - npx eslint
 
 pages:
-    stage: deploy
-    script:
-        - cd page
-        - yarn build
-    cache:
-        paths:
-            - page/node_modules/
-            - page/yarn.lock
-    artifacts:
-        paths:
-            - page/public/
+  stage: deploy
+  script:
+    - cd page
+    - yarn build
+    - cp -R public ../
+  cache:
+    paths:
+      - page/node_modules/
+      - page/yarn.lock
+  artifacts:
+    paths:
+      - public
