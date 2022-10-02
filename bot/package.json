@@ -19,6 +19,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "tsc && node ./bot/dist/deploy-commands.js && concurrently \"tsc -w\" \"nodemon ./dist/index.js\""
+    "start": "tsc && node ./dist/deploy-commands.js && concurrently \"tsc -w\" \"nodemon ./dist/index.js\""
   }
 }
