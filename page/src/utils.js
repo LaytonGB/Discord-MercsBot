@@ -13,18 +13,18 @@ const hoursToMilliseconds = (hours) => {
   return hours * 60 * 60 * 1000;
 }
 
+const makeDateFromUNIX = (unix) => {
+  return new Date(unix * 1000);
+}
+
 const getStartEndFromUnix = (unix) => {
   const start = makeDateFromUNIX(unix);
   const end = new Date(start.getTime() + hoursToMilliseconds(3));
   return { start, end };
 }
 
-const makeDateFromUNIX = (unix) => {
-  return new Date(unix * 1000);
-}
-
 const convertDate = (date) => {
-  let event = new Date(date).toISOString()
+  let event = date.toISOString()
     .split(/[-:]/).join("")
     .split(".")[0];
   return event;
