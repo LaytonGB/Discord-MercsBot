@@ -13,8 +13,13 @@ const hoursToMilliseconds = (hours) => {
   return hours * 60 * 60 * 1000;
 }
 
+const createDateAsUTC = (date) => {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+}
+
 const makeDateFromUNIX = (unix) => {
-  return new Date(unix * 1000);
+  const date = createDateAsUTC(new Date(unix * 1000));
+  return date;
 }
 
 const getStartEndFromUnix = (unix) => {
